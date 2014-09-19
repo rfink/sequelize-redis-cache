@@ -1,0 +1,34 @@
+{
+  "name": "sequelize-redis-cache",
+  "version": "0.0.0",
+  "description": "Caching module for sequelize queries",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --timeout=5000 --require should test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rfink/sequelize-redis-cache.git"
+  },
+  "keywords": [
+    "sequelize",
+    "mysql",
+    "redis",
+    "cache",
+    "postgres",
+    "sqlite"
+  ],
+  "author": "Ryan Fink <ryanjfink@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "1.21.4",
+    "redis": "0.12.1",
+    "sequelize": "1.7.10",
+    "should": "4.0.4",
+    "sqlite3": "2.2.7"
+  },
+  "dependencies": {
+    "bluebird": "2.3.2",
+    "object-hash": "0.3.0"
+  }
+}
