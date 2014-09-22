@@ -27,6 +27,7 @@ describe('Sequelize-Redis-Cache', function() {
   var rc;
   var db;
   var Entity;
+  var Entity2;
   var inst;
   var cacher;
 
@@ -43,11 +44,23 @@ describe('Sequelize-Redis-Cache', function() {
       },
       name: Sequelize.STRING(255)
     });
+    Entity2 = db.define('entity2', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      }
+    });
+    Entity2.belongsTo(Entity, { foreignKey: 'entityId' });
+    Entity.hasMany(Entity2, { foreignKey: 'entityId' });
     Entity.sync({ force: true })
       .success(function() {
-        Entity.create({ name: 'Test Instance' }).success(function(entity) {
-          inst = entity;
-          return done();
+        Entity2.sync({ force: true }).success(function() {
+          Entity.create({ name: 'Test Instance' }).success(function(entity) {
+            inst = entity;
+            return done();
+          })
+            .error(onErr);
         })
         .error(onErr);
       })
@@ -100,6 +113,16 @@ describe('Sequelize-Redis-Cache', function() {
               return done();
             });
           }, onErr);
+      }, onErr);
+  });
+
+  it('should not blow up with circular reference queries (includes)', function(done) {
+    var query = { where: { createdAt: inst.createdAt }, include: [Entity2] };
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.find(query)
+      .then(function(res) {
+        return done();
       }, onErr);
   });
 });

@@ -1,6 +1,6 @@
 {
   "name": "sequelize-redis-cache",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Caching module for sequelize queries",
   "main": "lib/index.js",
   "scripts": {
@@ -29,6 +29,6 @@
   },
   "dependencies": {
     "bluebird": "2.3.2",
-    "object-hash": "0.3.0"
+    "circular-json": "0.1.6"
   }
 }
