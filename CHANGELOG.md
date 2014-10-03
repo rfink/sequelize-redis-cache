@@ -1,4 +1,8 @@
+# v0.0.6 #
+- Fix v0.0.5, findAll and aggregates
+
 # v0.0.5 #
+- This is also a broken release, do NOT use, findAll and aggregates become broken
 - Fix v0.0.4, use .get and upgrade sequelize to 2.0.0rc1 (does recursive POJO conversion)
 - Add CHANGELOG.md
 

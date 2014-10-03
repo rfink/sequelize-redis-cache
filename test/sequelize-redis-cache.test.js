@@ -150,4 +150,63 @@ describe('Sequelize-Redis-Cache', function() {
         return done();
       }, onErr);
   });
+
+  it('should findAll correctly', function(done) {
+    var query = { where: { createdAt: inst.createdAt } };
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.findAll(query)
+      .then(function(res) {
+        should.exist(res);
+        res.should.be.an.Array;
+        res.should.have.length(1);
+        res[0].should.have.property('id');
+        res[0].toString().should.not.equal('[object SequelizeInstance]');
+        return done();
+      }, onErr);
+  });
+
+  it('should count correctly', function(done) {
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.count()
+      .then(function(res) {
+        should.exist(res);
+        res.should.equal(1);
+        return done();
+      }, onErr);
+  });
+
+  it('should sum correctly', function(done) {
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.sum('id')
+      .then(function(res) {
+        should.exist(res);
+        res.should.equal(1);
+        return done();
+      }, onErr);
+  });
+
+  it('should max correctly', function(done) {
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.max('id')
+      .then(function(res) {
+        should.exist(res);
+        res.should.equal(1);
+        return done();
+      }, onErr);
+  });
+
+  it('should min correctly', function(done) {
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.min('id')
+      .then(function(res) {
+        should.exist(res);
+        res.should.equal(1);
+        return done();
+      }, onErr);
+  });
 });
