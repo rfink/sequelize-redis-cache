@@ -23,7 +23,7 @@
   "devDependencies": {
     "mocha": "1.21.4",
     "redis": "0.12.1",
-    "sequelize": "1.7.10",
+    "sequelize": "~2.0.0rc1",
     "should": "4.0.4",
     "sqlite3": "2.2.7"
   },

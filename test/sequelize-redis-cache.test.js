@@ -60,17 +60,20 @@ describe('Sequelize-Redis-Cache', function() {
     Entity2.belongsTo(Entity, { foreignKey: 'entityId' });
     Entity.hasMany(Entity2, { foreignKey: 'entityId' });
     Entity.sync({ force: true })
-      .success(function() {
-        Entity2.sync({ force: true }).success(function() {
-          Entity.create({ name: 'Test Instance' }).success(function(entity) {
+      .then(function() {
+        Entity2.sync({ force: true }).then(function() {
+          Entity.create({ name: 'Test Instance' }).then(function(entity) {
             inst = entity;
-            return done();
+            Entity2.create({ entityId: inst.id }).then(function() {
+              return done();
+            })
+            .catch(onErr);
           })
-            .error(onErr);
+          .catch(onErr);
         })
-        .error(onErr);
+        .catch(onErr);
       })
-      .error(onErr);
+      .catch(onErr);
   });
 
   it('should fetch stuff from database with and without cache', function(done) {
@@ -128,6 +131,22 @@ describe('Sequelize-Redis-Cache', function() {
       .ttl(1);
     return obj.find(query)
       .then(function(res) {
+        return done();
+      }, onErr);
+  });
+
+  it('should return a POJO when retrieving from cache and when not', function(done) {
+    var obj;
+    var query = { where: { createdAt: inst.createdAt } };
+    query.include = [Entity2];
+    obj = cacher('entity')
+      .ttl(1);
+    return obj.find(query)
+      .then(function(res) {
+        res.toString().should.not.equal('[object SequelizeInstance]');
+        res.should.have.property('entity2s');
+        res.entity2s.should.have.length(1);
+        res.entity2s[0].toString().should.not.equal('[object SequelizeInstance]');
         return done();
       }, onErr);
   });
