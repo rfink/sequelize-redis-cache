@@ -1,3 +1,6 @@
+# v0.0.7 #
+- Fix findAll from P.R. #3 (H/T to https://github.com/thujikun)
+
 # v0.0.6 #
 - Fix v0.0.5, findAll and aggregates
 
