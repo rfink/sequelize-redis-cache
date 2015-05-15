@@ -50,6 +50,11 @@ methods are:
   max
   sum
 
+Notes
+=====================
+
+This library does not handle automatic invalidation of caches, since it currently does not handle inserts/updates/deletes/etc.  I'd be in favor of someone submitting a patch to accommodate that, although I think that would be a significant undertaking.
+
 License
 ====================
 MIT - Rekt
