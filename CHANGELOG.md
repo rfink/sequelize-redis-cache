@@ -1,3 +1,7 @@
+# v1.0.0 #
+- Add sequelize 3.0 support, drop queryOptions
+- Added travis ci build status and entry
+
 # v0.0.7 #
 - Fix findAll from P.R. #3 (H/T to https://github.com/thujikun)
 
