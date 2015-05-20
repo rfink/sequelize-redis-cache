@@ -23,9 +23,9 @@
   "devDependencies": {
     "mocha": "1.21.4",
     "redis": "0.12.1",
-    "sequelize": "~2.0.0rc1",
+    "sequelize": "~3.0.0",
     "should": "4.0.4",
-    "sqlite3": "2.2.7"
+    "sqlite3": "3.0.8"
   },
   "dependencies": {
     "bluebird": "2.3.2",

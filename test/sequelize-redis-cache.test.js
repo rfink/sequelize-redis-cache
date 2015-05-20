@@ -43,12 +43,6 @@ describe('Sequelize-Redis-Cache', function() {
         autoIncrement: true
       },
       name: Sequelize.STRING(255)
-    }, {
-      instanceMethods: {
-        toJSON: function toJSON() {
-          return this.get();
-        }
-      }
     });
     Entity2 = db.define('entity2', {
       id: {
@@ -161,7 +155,6 @@ describe('Sequelize-Redis-Cache', function() {
         res.should.be.an.Array;
         res.should.have.length(1);
         res[0].should.have.property('id');
-        res[0].toString().should.not.equal('[object SequelizeInstance]');
         return done();
       }, onErr);
   });
