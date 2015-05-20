@@ -161,7 +161,6 @@ describe('Sequelize-Redis-Cache', function() {
         res.should.be.an.Array;
         res.should.have.length(1);
         res[0].should.have.property('id');
-        res[0].toString().should.not.equal('[object SequelizeInstance]');
         return done();
       }, onErr);
   });
