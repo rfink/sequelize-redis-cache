@@ -1,3 +1,6 @@
+# v1.1.1 #
+- Added error handler for database issues (H/T https://github.com/thujikun)
+
 # v1.1.0 #
 - Added findOne method (H/T https://github.com/jonathanleang)
 
