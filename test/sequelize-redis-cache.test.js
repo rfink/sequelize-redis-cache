@@ -89,6 +89,28 @@ describe('Sequelize-Redis-Cache', function() {
           }, onErr);
       }, onErr);
   });
+  
+  
+  it('should fetch stuff from database with and without cache', function(done) {
+    var query = { where: { createdAt: inst.createdAt } };
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.findOne(query)
+      .then(function(res) {
+        obj.cacheHit.should.equal(false);
+        var obj2 = cacher('entity')
+          .ttl(1);
+        return obj2.findOne(query)
+          .then(function(res) {
+            should.exist(res);
+            obj2.cacheHit.should.equal(true);
+            obj2.clearCache().then(function() {
+              return done();
+            }, onErr);
+          }, onErr);
+      }, onErr);
+  });
+
 
   it('should not hit cache if no results', function(done) {
     var obj = cacher('entity')
