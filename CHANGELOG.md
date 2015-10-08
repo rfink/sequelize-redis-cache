@@ -1,3 +1,6 @@
+# v1.1.0 #
+- Added findOne method (H/T https://github.com/jonathanleang)
+
 # v1.0.0 #
 - Add sequelize 3.0 support, drop queryOptions
 - Added travis ci build status and entry

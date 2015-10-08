@@ -43,6 +43,7 @@ Check the tests out for more info, but it's pretty simple.  The currently suppor
 methods are:
 
   find
+  findOne
   findAll
   findAndCountAll
   all
