@@ -29,7 +29,8 @@ var rc = redis.createClient(6379, 'localhost');
 var db = new Sequelize('cache_tester', 'root', 'root', { dialect: 'mysql' });
 var cacher = initCache(db, rc);
 
-var cacheObj = cacher('sequelize-model-name')
+var cacheObj = cacher()
+  .model('sequelize-model-name')
   .ttl(5);
 cacheObj.find({ where: { id: 3 } })
   .then(function(row) {
@@ -39,9 +40,23 @@ cacheObj.find({ where: { id: 3 } })
 
 ```
 
+You can also execute and cache raw queries:
+
+```javascript
+
+var cacheObj = cacher()
+  .ttl(5);
+cacheObj.query('SELECT * FROM widgets LIMIT 10')
+  .then(function(row) {
+    console.log(row); // Array of raw objects
+  });
+
+```
+
 Check the tests out for more info, but it's pretty simple.  The currently supported
 methods are:
 
+  query
   find
   findOne
   findAll
