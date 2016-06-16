@@ -1,6 +1,6 @@
 {
   "name": "sequelize-redis-cache",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Caching module for sequelize queries",
   "main": "lib/index.js",
   "scripts": {
@@ -22,10 +22,10 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "1.21.4",
-    "redis": "0.12.1",
+    "redis": "~2.6.0",
     "sequelize": "~3.0.0",
     "should": "4.0.4",
-    "sqlite3": "3.0.8"
+    "sqlite3": "~3.1.0"
   },
   "dependencies": {
     "bluebird": "2.3.2",
