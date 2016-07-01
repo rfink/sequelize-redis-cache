@@ -1,3 +1,13 @@
+# v1.2.0 #
+- Fixed issue with associations generating new cache (H/T https://github.com/NotJustClarkKent)
+- Updated dev dependencies for sqlite3, redis (should work test correctly with node 4.x, 5.x, 6.x)
+
+# v1.1.1 #
+- Added error handler for database issues (H/T https://github.com/thujikun)
+
+# v1.1.0 #
+- Added findOne method (H/T https://github.com/jonathanleang)
+
 # v1.0.0 #
 - Add sequelize 3.0 support, drop queryOptions
 - Added travis ci build status and entry
