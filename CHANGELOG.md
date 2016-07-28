@@ -1,3 +1,6 @@
+# v1.3.0 #
+- Added findAndCount method
+
 # v1.2.1 #
 - Fixed bug where cacheHit was true even when going to the database, when reusing the cache obj
 
