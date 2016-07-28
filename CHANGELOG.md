@@ -1,3 +1,6 @@
+# v1.4.0 #
+- Swap redis.setex for redis.set(['EX']) (H/T https://github.com/thujikun)
+
 # v1.3.0 #
 - Added findAndCount method
 
