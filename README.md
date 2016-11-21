@@ -27,7 +27,7 @@ var Sequelize = require('sequelize');
 
 var rc = redis.createClient(6379, 'localhost');
 var db = new Sequelize('cache_tester', 'root', 'root', { dialect: 'mysql' });
-var cacher = initCache(db, rc);
+var cacher = initCacher(db, rc);
 
 var cacheObj = cacher('sequelize-model-name')
   .ttl(5);
