@@ -207,6 +207,30 @@ describe('Sequelize-Redis-Cache', function() {
       }, onErr);
   });
 
+  it('should findAndCount correctly', function(done) {
+    var query = { where: { createdAt: inst.createdAt } };
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.findAndCount(query)
+      .then(function(res) {
+        should.exist(res);
+        res.should.have.property('count', 1);
+        return done();
+      });
+  });
+
+  it('should findAndCountAll correctly', function(done) {
+    var query = { where: { createdAt: inst.createdAt } };
+    var obj = cacher('entity')
+      .ttl(1);
+    return obj.findAndCountAll(query)
+      .then(function(res) {
+        should.exist(res);
+        res.should.have.property('count', 1);
+        return done();
+      });
+  });
+
   it('should count correctly', function(done) {
     var obj = cacher()
       .model('entity')
