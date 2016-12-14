@@ -21,14 +21,14 @@
   "author": "Ryan Fink <ryanjfink@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "1.21.4",
+    "mocha": "2.5.3",
     "redis": "~2.6.0",
-    "sequelize": "~3.0.0",
-    "should": "4.0.4",
+    "sequelize": "~3.23.0",
+    "should": "10.0.0",
     "sqlite3": "~3.1.0"
   },
   "dependencies": {
-    "bluebird": "2.3.2",
-    "circular-json": "0.1.6"
+    "bluebird": "3.4.1",
+    "circular-json": "0.3.0"
   }
 }
