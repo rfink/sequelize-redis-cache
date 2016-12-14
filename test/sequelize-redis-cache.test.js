@@ -3,7 +3,7 @@
 var redis = require('redis');
 var Sequelize = require('sequelize');
 var should = require('should');
-var initCache = require('..');
+var cacher = require('..');
 
 var opts = {};
 opts.database = process.env.DB_NAME || 'sequelize_redis_cache_test';
@@ -30,13 +30,11 @@ describe('Sequelize-Redis-Cache', function() {
   var Entity;
   var Entity2;
   var inst;
-  var cacher;
 
   before(function(done) {
     rc = redis.createClient(redisPort, redisHost);
     rc.on('error', onErr);
     db = new Sequelize(opts.database, opts.user, opts.password, opts);
-    cacher = initCache(db, rc);
     Entity = db.define('entity', {
       id: {
         type: Sequelize.INTEGER,
@@ -73,13 +71,13 @@ describe('Sequelize-Redis-Cache', function() {
 
   it('should fetch stuff from database with and without cache', function(done) {
     var query = { where: { createdAt: inst.createdAt } };
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.find(query)
       .then(function(res) {
         obj.cacheHit.should.equal(false);
-        var obj2 = cacher()
+        var obj2 = cacher(db, rc)
           .model('entity')
           .ttl(1);
         return obj2.find(query)
@@ -96,13 +94,13 @@ describe('Sequelize-Redis-Cache', function() {
 
   it('should fetch stuff from database with and without cache', function(done) {
     var query = { where: { createdAt: inst.createdAt } };
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.findOne(query)
       .then(function(res) {
         obj.cacheHit.should.equal(false);
-        var obj2 = cacher()
+        var obj2 = cacher(db, rc)
           .model('entity')
           .ttl(1);
         return obj2.findOne(query)
@@ -118,7 +116,7 @@ describe('Sequelize-Redis-Cache', function() {
 
 
   it('should not hit cache if no results', function(done) {
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.find({ where: { id: 2 } })
@@ -131,7 +129,7 @@ describe('Sequelize-Redis-Cache', function() {
 
   it('should clear the cache correctly', function(done) {
     var query = { where: { createdAt: inst.createdAt } };
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.find(query)
@@ -150,7 +148,7 @@ describe('Sequelize-Redis-Cache', function() {
 
   it('should not blow up with circular reference queries (includes)', function(done) {
     var query = { where: { createdAt: inst.createdAt }, include: [Entity2] };
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.find(query)
@@ -163,7 +161,7 @@ describe('Sequelize-Redis-Cache', function() {
     var obj;
     var query = { where: { createdAt: inst.createdAt } };
     query.include = [Entity2];
-    obj = cacher()
+    obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.find(query)
@@ -177,7 +175,7 @@ describe('Sequelize-Redis-Cache', function() {
   });
 
   it('should run a raw query correctly', function(done) {
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .ttl(1);
     return obj.query('SELECT * FROM entities')
       .then(function(res) {
@@ -194,7 +192,7 @@ describe('Sequelize-Redis-Cache', function() {
 
   it('should findAll correctly', function(done) {
     var query = { where: { createdAt: inst.createdAt } };
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.findAll(query)
@@ -209,7 +207,8 @@ describe('Sequelize-Redis-Cache', function() {
 
   it('should findAndCount correctly', function(done) {
     var query = { where: { createdAt: inst.createdAt } };
-    var obj = cacher('entity')
+    var obj = cacher(db, rc)
+      .model('entity')
       .ttl(1);
     return obj.findAndCount(query)
       .then(function(res) {
@@ -221,7 +220,8 @@ describe('Sequelize-Redis-Cache', function() {
 
   it('should findAndCountAll correctly', function(done) {
     var query = { where: { createdAt: inst.createdAt } };
-    var obj = cacher('entity')
+    var obj = cacher(db, rc)
+      .model('entity')
       .ttl(1);
     return obj.findAndCountAll(query)
       .then(function(res) {
@@ -232,7 +232,7 @@ describe('Sequelize-Redis-Cache', function() {
   });
 
   it('should count correctly', function(done) {
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.count()
@@ -244,7 +244,7 @@ describe('Sequelize-Redis-Cache', function() {
   });
 
   it('should sum correctly', function(done) {
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.sum('id')
@@ -256,7 +256,7 @@ describe('Sequelize-Redis-Cache', function() {
   });
 
   it('should max correctly', function(done) {
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.max('id')
@@ -268,7 +268,7 @@ describe('Sequelize-Redis-Cache', function() {
   });
 
   it('should min correctly', function(done) {
-    var obj = cacher()
+    var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
     return obj.min('id')

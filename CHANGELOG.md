@@ -1,3 +1,9 @@
+# v2.0.0 #
+- New API
+  - Allow raw queries to be cached
+  - Non-singleton design pattern - required moving model name from constructor
+    to model method
+
 # v1.4.0 #
 - Swap redis.setex for redis.set(['EX']) (H/T https://github.com/thujikun)
 
