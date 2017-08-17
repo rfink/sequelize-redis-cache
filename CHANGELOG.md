@@ -1,3 +1,6 @@
+# v2.0.1 #
+- Fixed bug where same query may be returned from cache twice
+
 # v2.0.0 #
 - New API
   - Allow raw queries to be cached
