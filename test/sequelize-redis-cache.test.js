@@ -190,6 +190,25 @@ describe('Sequelize-Redis-Cache', function() {
       });
   });
 
+  it('should run a raw query with options correctly', function(done) {
+    var obj = cacher(db, rc)
+      .ttl(1);
+    return obj.query(
+        'SELECT * FROM entities WHERE id = :id',
+        { 'replacements': { 'id': 1 }}
+    )
+      .then(function(res) {
+        should.exist(res);
+        res.should.be.an.Array;
+        res.should.have.length(1);
+        res[0].should.have.property('id', 1);
+        res[0].should.have.property('name', 'Test Instance');
+        res[0].should.have.property('createdAt');
+        res[0].should.have.property('updatedAt');
+        return done();
+      });
+  });
+
   it('should findAll correctly', function(done) {
     var query = { where: { createdAt: inst.createdAt } };
     var obj = cacher(db, rc)
